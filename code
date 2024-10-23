@@ -1,0 +1,94 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.HashMap;
+import java.util.Map;
+public class CurrencyConverter56{
+private static Map<String, Double> conversionRates;
+public static void initializeConversionRates() {
+conversionRates = new HashMap<>();
+// Replace these with real exchange rates
+conversionRates.put("select");
+conversionRates.put("Rupees", 1.0);
+conversionRates.put("US Dollars", 83.24);
+conversionRates.put("Euros", 88.45);
+conversionRates.put("Chinese Yuan", 11.55);
+conversionRates.put("Korean Won", 0.062);
+conversionRates.put("Japanese Yen", 0.74);
+conversionRates.put("Dirham", 0.044);
+}
+public static void converter() {
+JFrame frame = new JFrame("Currency Converter");
+JPanel panel = new JPanel(new BorderLayout());
+// Create combo boxes for source and target currencies
+JComboBox<String> sourceCurrencyComboBox = new
+JComboBox<>();
+JComboBox<String> targetCurrencyComboBox = new
+JComboBox<>();
+// Create text fields for entering source amount and displaying
+the target amount
+JTextField sourceAmountField = new JTextField("0");
+sourceAmountField.setPreferredSize(new
+Dimension(150, 30));
+JTextField targetAmountField = new JTextField("0");
+targetAmountField.setPreferredSize(new
+Dimension(150, 30)); // Set the preferred width
+// Create the "Convert" and "Exit" buttons
+JButton convertButton = new JButton("Convert");
+JButton exitButton 
+// Create labels for better alignment
+JLabel sourceLabel = new JLabel("From:");
+JLabel targetLabel = new JLabel("To:");
+JLabel amountLabel = new JLabel("Amount:");
+JLabel resultLabel = new JLabel("Result:");
+// Initialize conversion rates and populate combo boxes
+initializeConversionRates();
+for (String currency : conversionRates.keySet()) {
+sourceCurrencyComboBox.addItem(currency);
+targetCurrencyComboBox.addItem(currency);
+}
+// Set the positions and sizes of components
+JPanel topPanel = new JPanel(new FlowLayout());
+topPanel.add(sourceLabel);
+topPanel.add(sourceCurrencyComboBox);
+topPanel.add(targetLabel);
+topPanel.add(targetCurrencyComboBox);
+panel.add(topPanel, BorderLayout.NORTH);
+JPanel middlePanel = new JPanel(new FlowLayout());
+middlePanel.add(amountLabel);
+middlePanel.add(sourceAmountField);
+middlePanel.add(convertButton);
+panel.add(middlePanel, BorderLayout.CENTER);
+JPanel bottomPanel = new JPanel(new FlowLayout()
+bottomPanel.add(resultLabel);
+bottomPanel.add(targetAmountField);
+bottomPanel.add(exitButton);
+panel.add(bottomPanel, BorderLayout.SOUTH);
+frame.add(panel);
+convertButton.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+String sourceCurrency =
+sourceCurrencyComboBox.getSelectedItem().toString();
+String targetCurrency =
+targetCurrencyComboBox.getSelectedItem().toString();
+double sourceAmount = Double.parseDouble(sourceAmountField.getText());
+double sourceRate = conversionRates.get(sourceCurrency);
+double targetRate = conversionRates.get(targetCurrency);
+double targetAmount = sourceAmount * (1 / sourceRate) *
+targetRate;
+targetAmountField.setText(String.format("%.2f", targetAmount));
+}
+});
+exitButton.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+System.exit(0);
+}
+});
+frame.setSize(400, 200);
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+frame.setVisible(true);
+}
+public static void main(String[] args) {
+converter();
+}
+}
